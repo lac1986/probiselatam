@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probise Latam — Donde las ideas toman forma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal:   #1D9E75; --teal-l: #E1F5EE; --teal-d: #0F6E56;
+    --carbon: #1E1E1C; --warm:   #F5F3EE; --mid:    #6B6A65;
+    --border: rgba(30,30,28,.1);
+    --serif:  'DM Serif Display', Georgia, serif;
+    --sans:   'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--warm); color: var(--carbon); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: .8rem 5vw; background: rgba(245,243,238,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+  .nav-logo { display: flex; align-items: center; gap: .7rem; text-decoration: none; }
+  .nav-logo svg { width: 32px; height: 32px; }
+  .nav-logo-text { font-family: var(--serif); font-size: 1.25rem; color: var(--carbon); letter-spacing: -.01em; }
+  .nav-btn { background: var(--teal); color: #fff; padding: .5rem 1.2rem; border-radius: 100px; font-size: .85rem; font-weight: 500; text-decoration: none; transition: background .2s; }
+  .nav-btn:hover { background: var(--teal-d); }
+
+  /* HERO */
+  .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 5vw 5rem; position: relative; overflow: hidden; }
+  .eyebrow { font-size: .75rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.2rem; opacity: 0; animation: up .6s .1s forwards; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 5.2rem); line-height: 1.08; letter-spacing: -.02em; max-width: 14ch; margin-bottom: 1.4rem; opacity: 0; animation: up .6s .2s forwards; }
+  .hero h1 em { font-style: italic; color: var(--teal); }
+  .hero-sub { font-size: 1.05rem; color: var(--mid); font-weight: 300; max-width: 42ch; line-height: 1.7; margin-bottom: 2.2rem; opacity: 0; animation: up .6s .3s forwards; }
+  .hero-btns { display: flex; gap: .8rem; flex-wrap: wrap; opacity: 0; animation: up .6s .4s forwards; }
+  .btn-dark { background: var(--carbon); color: #fff; padding: .8rem 1.8rem; border-radius: 100px; font-size: .9rem; font-weight: 500; text-decoration: none; transition: background .2s, transform .2s; }
+  .btn-dark:hover { background: #333; transform: translateY(-1px); }
+  .btn-outline { color: var(--carbon); border: 1.5px solid var(--border); padding: .8rem 1.8rem; border-radius: 100px; font-size: .9rem; text-decoration: none; transition: border-color .2s; }
+  .btn-outline:hover { border-color: var(--carbon); }
+
+  /* Hero deco: large logo in background */
+  .hero-deco { position: absolute; right: -2vw; top: 50%; transform: translateY(-50%); width: clamp(240px, 36vw, 500px); height: clamp(240px, 36vw, 500px); opacity: 0; animation: fadein .9s .5s forwards; pointer-events: none; }
+
+  /* SHARED */
+  section { padding: 5rem 5vw; }
+  .lbl { font-size: .72rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); margin-bottom: .9rem; }
+  .stitle { font-family: var(--serif); font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.15; letter-spacing: -.015em; margin-bottom: .8rem; }
+  .ssub { font-size: .95rem; color: var(--mid); font-weight: 300; max-width: 46ch; line-height: 1.7; margin-bottom: 2.8rem; }
+
+  /* PILARES */
+  #servicios { background: #fff; }
+  .pilares-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 2.5rem; }
+  .pilar { background: #fff; padding: 1.6rem 1.4rem; transition: background .2s; }
+  .pilar:hover { background: var(--warm); }
+  .pdot { width: 9px; height: 9px; border-radius: 50%; margin-bottom: .9rem; }
+  .pilar h3 { font-family: var(--serif); font-size: 1rem; font-weight: 400; margin-bottom: .35rem; line-height: 1.2; }
+  .pilar p { font-size: .82rem; color: var(--mid); line-height: 1.6; font-weight: 300; }
+  .chips { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .chip { padding: .42rem 1rem; border-radius: 100px; border: 1.5px solid var(--border); font-size: .83rem; background: var(--warm); color: var(--carbon); transition: border-color .2s, background .2s; }
+  .chip:hover { border-color: var(--teal); background: var(--teal-l); }
+
+  /* PROCESO + CTA */
+  #contacto { background: var(--carbon); color: #fff; }
+  #contacto .lbl { color: #5DCAA5; }
+  #contacto .stitle { color: #fff; }
+  #contacto .ssub { color: rgba(255,255,255,.5); }
+  .proceso { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
+  .paso { border-top: 1px solid rgba(255,255,255,.12); padding-top: 1.1rem; }
+  .paso-n { font-family: var(--serif); font-size: 1.7rem; color: var(--teal); line-height: 1; margin-bottom: .6rem; }
+  .paso h4 { font-size: .9rem; font-weight: 500; color: #fff; margin-bottom: .3rem; }
+  .paso p { font-size: .82rem; color: rgba(255,255,255,.4); line-height: 1.6; font-weight: 300; }
+  .cta-box { background: var(--teal); border-radius: 16px; padding: 3rem 2.5rem; text-align: center; }
+  .cta-box h2 { font-family: var(--serif); font-size: clamp(1.6rem, 2.8vw, 2.2rem); color: #fff; margin-bottom: .65rem; letter-spacing: -.01em; }
+  .cta-box p { font-size: .92rem; color: rgba(255,255,255,.75); font-weight: 300; max-width: 38ch; margin: 0 auto 1.8rem; line-height: 1.65; }
+  .btn-white { background: #fff; color: var(--teal-d); padding: .85rem 2.1rem; border-radius: 100px; font-size: .92rem; font-weight: 500; text-decoration: none; display: inline-block; transition: transform .2s, box-shadow .2s; }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+
+  /* FOOTER */
+  footer { background: #141412; color: rgba(255,255,255,.35); padding: 1.6rem 5vw; font-size: .78rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem; }
+  .footer-logo { display: flex; align-items: center; gap: .6rem; }
+  .footer-logo svg { width: 22px; height: 22px; opacity: .7; }
+  footer strong { color: rgba(255,255,255,.7); font-family: var(--serif); font-weight: 400; font-size: .88rem; }
+
+  @keyframes up { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadein { from { opacity:0; } to { opacity:.08; } }
+
+  @media (max-width: 580px) {
+    .hero-deco { display: none; }
+    .pilares-grid { grid-template-columns: 1fr; }
+    .proceso { grid-template-columns: 1fr 1fr; }
+    .cta-box { padding: 2.2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ISOTIPO SVG inline reutilizable -->
+<svg style="display:none">
+  <symbol id="iso" viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="88" stroke="#1D9E75" stroke-width="1.2"/>
+    <circle cx="100" cy="100" r="56" stroke="#1D9E75" stroke-width="1" stroke-dasharray="5 7"/>
+    <circle cx="100" cy="100" r="24" stroke="#1D9E75" stroke-width="1"/>
+    <circle cx="100" cy="100" r="6" fill="#1D9E75"/>
+    <line x1="100" y1="12" x2="100" y2="94" stroke="#1D9E75" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="100" cy="12" r="4.5" fill="#1D9E75"/>
+    <line x1="100" y1="106" x2="100" y2="188" stroke="#1D9E75" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="100" cy="188" r="4.5" fill="#1D9E75"/>
+    <line x1="12" y1="100" x2="76" y2="100" stroke="#378ADD" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="12" cy="100" r="4.5" fill="#378ADD"/>
+    <line x1="124" y1="100" x2="188" y2="100" stroke="#D85A30" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="188" cy="100" r="4.5" fill="#D85A30"/>
+    <line x1="36" y1="36" x2="83" y2="83" stroke="#BA7517" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="36" cy="36" r="4.5" fill="#BA7517"/>
+    <line x1="117" y1="117" x2="164" y2="164" stroke="#D4537E" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="164" cy="164" r="4.5" fill="#D4537E"/>
+  </symbol>
+  <symbol id="iso-white" viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="88" stroke="rgba(255,255,255,.7)" stroke-width="1.2"/>
+    <circle cx="100" cy="100" r="56" stroke="rgba(255,255,255,.5)" stroke-width="1" stroke-dasharray="5 7"/>
+    <circle cx="100" cy="100" r="24" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
+    <circle cx="100" cy="100" r="6" fill="white"/>
+    <line x1="100" y1="12" x2="100" y2="94" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="100" cy="12" r="4.5" fill="white"/>
+    <line x1="100" y1="106" x2="100" y2="188" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="100" cy="188" r="4.5" fill="white"/>
+    <line x1="12" y1="100" x2="76" y2="100" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="12" cy="100" r="4.5" fill="white"/>
+    <line x1="124" y1="100" x2="188" y2="100" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="188" cy="100" r="4.5" fill="white"/>
+    <line x1="36" y1="36" x2="83" y2="83" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="36" cy="36" r="4.5" fill="white"/>
+    <line x1="117" y1="117" x2="164" y2="164" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="164" cy="164" r="4.5" fill="white"/>
+  </symbol>
+</svg>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="32" height="32"><use href="#iso"/></svg>
+    <span class="nav-logo-text">Probise Latam</span>
+  </a>
+  <a href="#contacto" class="nav-btn">Hablemos</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="eyebrow">Consultoría integral</p>
+  <h1>Donde las ideas <em>toman forma.</em></h1>
+  <p class="hero-sub">Acompañamos organizaciones, marcas y proyectos creativos desde la comunicación, las personas, la tecnología y la materia.</p>
+  <div class="hero-btns">
+    <a href="#contacto" class="btn-dark">Diagnóstico gratuito</a>
+    <a href="#servicios" class="btn-outline">Qué hacemos</a>
+  </div>
+  <!-- Large decorative isotipo -->
+  <svg class="hero-deco" viewBox="0 0 200 200" fill="none">
+    <use href="#iso"/>
+  </svg>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <p class="lbl">Lo que hacemos</p>
+  <h2 class="stitle">Cinco frentes, un mismo hilo.</h2>
+  <p class="ssub">No trabajamos en silos. Cada pilar se conecta con los demás porque los problemas reales tampoco vienen solos.</p>
+  <div class="pilares-grid">
+    <div class="pilar"><div class="pdot" style="background:#1D9E75"></div><h3>Comunicación estratégica</h3><p>Auditoría, estrategia, comunicación interna y de crisis.</p></div>
+    <div class="pilar"><div class="pdot" style="background:#378ADD"></div><h3>Tecnología e IA</h3><p>Implementación de inteligencia artificial y automatización de procesos.</p></div>
+    <div class="pilar"><div class="pdot" style="background:#D85A30"></div><h3>Personas y equipos</h3><p>Liderazgo, cultura organizacional y gestión del cambio.</p></div>
+    <div class="pilar"><div class="pdot" style="background:#BA7517"></div><h3>Comunicación digital</h3><p>Branding, identidad visual, redes sociales y marketing digital.</p></div>
+    <div class="pilar"><div class="pdot" style="background:#D4537E"></div><h3>Cultura material</h3><p>Diseño textil, producción editorial y narrativa para proyectos culturales.</p></div>
+  </div>
+  <p class="lbl">Para quién</p>
+  <div class="chips">
+    <span class="chip">Startups</span>
+    <span class="chip">PYMEs</span>
+    <span class="chip">Grandes organizaciones</span>
+    <span class="chip">ONGs</span>
+    <span class="chip">Marcas de indumentaria</span>
+    <span class="chip">Diseñadores independientes</span>
+    <span class="chip">Editoriales y revistas</span>
+    <span class="chip">Artistas y proyectos culturales</span>
+    <span class="chip">Individuos con un proyecto</span>
+  </div>
+</section>
+
+<!-- PROCESO + CTA -->
+<section id="contacto">
+  <p class="lbl">Cómo trabajamos</p>
+  <h2 class="stitle">Siempre empezamos por entender.</h2>
+  <p class="ssub">Antes de proponer nada, escuchamos. Después construimos juntos.</p>
+  <div class="proceso">
+    <div class="paso"><div class="paso-n">01</div><h4>Diagnóstico gratuito</h4><p>Media hora donde ya empezamos a trabajar juntos.</p></div>
+    <div class="paso"><div class="paso-n">02</div><h4>Propuesta a medida</h4><p>Sin paquetes genéricos. Cada propuesta parte de cero.</p></div>
+    <div class="paso"><div class="paso-n">03</div><h4>Acompañamiento real</h4><p>Estamos en todo el proceso, ajustamos y medimos.</p></div>
+    <div class="paso"><div class="paso-n">04</div><h4>Resultados que quedan</h4><p>Trabajamos para que cada vez nos necesites menos.</p></div>
+  </div>
+  <div class="cta-box">
+    <h2>Media hora. Sin costo. Ya empezamos.</h2>
+    <p>Una conversación donde entendemos tu situación y te decimos honestamente si podemos ayudarte.</p>
+    <a href="/cdn-cgi/l/email-protection#ddb5b2b1bc9dadafb2bfb4aeb8f3beb2b0" class="btn-white">Agendá tu diagnóstico gratuito</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg width="22" height="22"><use href="#iso-white"/></svg>
+    <strong>Probise Latam</strong>
+  </div>
+  <span>Donde las ideas toman forma.</span>
+  <span>hola@probiselatam.com</span>
+</footer>
+
+</body>
+</html>
